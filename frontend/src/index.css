@@ -93,3 +93,7 @@ main {
 .text-bold {
   font-weight: bold;
 }
+
+button.thumbnail {
+  padding: 0;
+}

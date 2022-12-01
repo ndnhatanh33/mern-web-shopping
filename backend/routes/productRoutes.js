@@ -108,7 +108,7 @@ productRouter.post(
   })
 );
 
-const PAGE_SIZE = 3;
+const PAGE_SIZE = 10;
 
 productRouter.get(
   '/staff',

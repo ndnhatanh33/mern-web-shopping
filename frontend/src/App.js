@@ -29,6 +29,7 @@ import SearchScreen from './screens/SearchScreen';
 import ProtectedRoute from './components/ProtectedRoute';
 import DashboardScreen from './screens/DashboardScreen';
 import AdminRoute from './components/AdminRoute';
+import StaffRoute from './components/StaffRoute';
 import ProductListScreen from './screens/ProductListScreen';
 import ProductEditScreen from './screens/ProductEditScreen';
 import OrderListScreen from './screens/OrderListScreen';
@@ -124,14 +125,18 @@ function App() {
                       <LinkContainer to="/admin/dashboard">
                         <NavDropdown.Item>Dashboard</NavDropdown.Item>
                       </LinkContainer>
-                      <LinkContainer to="/admin/products">
-                        <NavDropdown.Item>Products</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/admin/orders">
-                        <NavDropdown.Item>Orders</NavDropdown.Item>
-                      </LinkContainer>
                       <LinkContainer to="/admin/users">
                         <NavDropdown.Item>Users</NavDropdown.Item>
+                      </LinkContainer>
+                    </NavDropdown>
+                  )}
+                  {userInfo && userInfo.isStaff && (
+                    <NavDropdown title="Staff" id="staff-nav-dropdown">
+                      <LinkContainer to="/staff/products">
+                        <NavDropdown.Item>Products</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to="/staff/orders">
+                        <NavDropdown.Item>Orders</NavDropdown.Item>
                       </LinkContainer>
                     </NavDropdown>
                   )}
@@ -208,34 +213,10 @@ function App() {
                 }
               ></Route>
               <Route
-                path="/admin/orders"
-                element={
-                  <AdminRoute>
-                    <OrderListScreen />
-                  </AdminRoute>
-                }
-              ></Route>
-              <Route
                 path="/admin/users"
                 element={
                   <AdminRoute>
                     <UserListScreen />
-                  </AdminRoute>
-                }
-              ></Route>
-              <Route
-                path="/admin/products"
-                element={
-                  <AdminRoute>
-                    <ProductListScreen />
-                  </AdminRoute>
-                }
-              ></Route>
-              <Route
-                path="/admin/product/:id"
-                element={
-                  <AdminRoute>
-                    <ProductEditScreen />
                   </AdminRoute>
                 }
               ></Route>
@@ -245,6 +226,31 @@ function App() {
                   <AdminRoute>
                     <UserEditScreen />
                   </AdminRoute>
+                }
+              ></Route>
+              {/* Staff Routes */}
+              <Route
+                path="/staff/orders"
+                element={
+                  <StaffRoute>
+                    <OrderListScreen />
+                  </StaffRoute>
+                }
+              ></Route>
+              <Route
+                path="/staff/products"
+                element={
+                  <StaffRoute>
+                    <ProductListScreen />
+                  </StaffRoute>
+                }
+              ></Route>
+              <Route
+                path="/staff/product/:id"
+                element={
+                  <StaffRoute>
+                    <ProductEditScreen />
+                  </StaffRoute>
                 }
               ></Route>
               <Route path="/" element={<HomeScreen />} />

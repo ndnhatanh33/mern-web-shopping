@@ -39,7 +39,6 @@ export default function ProfileScreen() {
       return;
     }
     try {
-      dispatch({ type: 'UPDATE_REQUEST' });
       const { data } = await axios.put(
         '/api/users/profile',
         {
@@ -59,7 +58,7 @@ export default function ProfileScreen() {
       toast.success('User updated successfully');
     } catch (err) {
       dispatch({
-        type: 'UPDATE_FAIL',
+        type: 'FETCH_FAIL',
       });
       toast.error(getError(err));
     }
@@ -81,7 +80,7 @@ export default function ProfileScreen() {
             required
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="name">
+        <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email</Form.Label>
           <Form.Control
             type="email"

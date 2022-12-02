@@ -52,8 +52,8 @@ export default function PaymentMethodScreen() {
               type="radio"
               id="ThanhToanKhiNhanHang"
               label="Thanh toán khi nhận hàng"
-              value="ThanhToanKhiNhanHang"
-              checked={paymentMethodName === 'ThanhToanKhiNhanHang'}
+              value="Thanh toán khi nhận hàng"
+              checked={paymentMethodName === 'Thanh toán khi nhận hàng'}
               onChange={(e) => setPaymentMethod(e.target.value)}
             />
           </div>

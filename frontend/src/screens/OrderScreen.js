@@ -78,12 +78,14 @@ export default function OrderScreen() {
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
+  const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
+
   function createOrder(data, actions) {
     return actions.order
       .create({
         purchase_units: [
           {
-            amount: { value: order.totalPrice / 23000 },
+            amount: { value: round2(order.totalPrice / 23000) },
           },
         ],
       })
@@ -111,6 +113,21 @@ export default function OrderScreen() {
       }
     });
   }
+
+  async function directPayment() {
+    try {
+      dispatch({ type: 'PAY_REQUEST' });
+      const { data } = await axios.put(`/api/orders/${order._id}/directpay`, {
+        headers: { authorization: `Bearer ${userInfo.token}` },
+      });
+      dispatch({ type: 'PAY_SUCCESS', payload: data });
+      toast.success('Đơn hàng đã được Thanh toán');
+    } catch (err) {
+      dispatch({ type: 'PAY_FAIL', payload: getError(err) });
+      toast.error(getError(err));
+    }
+  }
+
   function onError(err) {
     toast.error(getError(err));
   }
@@ -296,7 +313,7 @@ export default function OrderScreen() {
                     </Col>
                   </Row>
                 </ListGroup.Item>
-                {!order.isPaid && (
+                {!order.isPaid && order.paymentMethod === 'PayPal' && (
                   <ListGroup.Item>
                     {isPending ? (
                       <LoadingBox />
@@ -312,6 +329,21 @@ export default function OrderScreen() {
                     {loadingPay && <LoadingBox></LoadingBox>}
                   </ListGroup.Item>
                 )}
+                {!order.isPaid &&
+                  order.paymentMethod === 'Thanh toán khi nhận hàng' && (
+                    <ListGroup.Item>
+                      {isPending ? (
+                        <LoadingBox />
+                      ) : (
+                        <div>
+                          <Button type="button" onClick={directPayment}>
+                            Đã thanh toán
+                          </Button>
+                        </div>
+                      )}
+                      {loadingPay && <LoadingBox></LoadingBox>}
+                    </ListGroup.Item>
+                  )}
                 {userInfo.isStaff && order.isPaid && !order.isDelivered && (
                   <ListGroup.Item>
                     {loadingDeliver && <LoadingBox></LoadingBox>}

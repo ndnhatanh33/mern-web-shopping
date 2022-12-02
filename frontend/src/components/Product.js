@@ -5,6 +5,7 @@ import Rating from './Rating';
 import axios from 'axios';
 import { useContext } from 'react';
 import { Store } from '../Store';
+import { formatCash } from '../utils';
 
 function Product(props) {
   const { product } = props;
@@ -19,7 +20,7 @@ function Product(props) {
     const quantity = existItem ? existItem.quantity + 1 : 1;
     const { data } = await axios.get('/api/products/' + item._id);
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock');
+      window.alert('Xin thứ lỗi! Sản phẩm đã hết hàng.');
       return;
     }
     ctxDispatch({
@@ -38,13 +39,15 @@ function Product(props) {
           <Card.Title>{product.name}</Card.Title>
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews} />
-        <Card.Text>${product.price}</Card.Text>
+        <Card.Text>{formatCash(product.price)}đ</Card.Text>
         {product.countInStock === 0 ? (
           <Button variant="light" disabled>
-            Out of stock
+            Hết hàng
           </Button>
         ) : (
-          <Button onClick={() => addCartHandler(product)}>Add to cart</Button>
+          <Button onClick={() => addCartHandler(product)}>
+            Thêm Vào Giỏ Hàng
+          </Button>
         )}
       </Card.Body>
     </Card>

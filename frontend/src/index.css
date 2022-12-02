@@ -137,3 +137,11 @@ button.thumbnail {
 .carousel-item img:hover {
   cursor: pointer;
 }
+
+.card .card-body a {
+  text-decoration: none;
+}
+
+ul li a {
+  text-decoration: none;
+}

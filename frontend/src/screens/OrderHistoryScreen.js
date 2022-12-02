@@ -7,6 +7,7 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { Store } from '../Store';
 import { getError } from '../utils';
+import { formatCash } from '../utils';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -54,10 +55,10 @@ export default function OrderHistoryScreen() {
   return (
     <div>
       <Helmet>
-        <title>Order History</title>
+        <title>Lịch sử đơn hàng</title>
       </Helmet>
 
-      <h1>Order History</h1>
+      <h1>Lịch sử đơn hàng</h1>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
@@ -67,11 +68,11 @@ export default function OrderHistoryScreen() {
           <thead>
             <tr>
               <th>ID</th>
-              <th>DATE</th>
-              <th>TOTAL</th>
-              <th>PAID</th>
-              <th>DELIVERED</th>
-              <th>ACTIONS</th>
+              <th>Ngày</th>
+              <th>Tổng tiền</th>
+              <th>Đã thanh toán</th>
+              <th>Đã giao hàng</th>
+              <th>Chức năng</th>
             </tr>
           </thead>
           <tbody>
@@ -79,12 +80,12 @@ export default function OrderHistoryScreen() {
               <tr key={order._id}>
                 <td>{order._id}</td>
                 <td>{order.createdAt.substring(0, 10)}</td>
-                <td>{order.totalPrice.toFixed(2)}</td>
-                <td>{order.isPaid ? order.paidAt.substring(0, 10) : 'No'}</td>
+                <td>{formatCash(order.totalPrice)}đ</td>
+                <td>{order.isPaid ? order.paidAt.substring(0, 10) : 'Chưa'}</td>
                 <td>
                   {order.isDelivered
                     ? order.deliveredAt.substring(0, 10)
-                    : 'No'}
+                    : 'Chưa'}
                 </td>
                 <td>
                   <Button
@@ -94,7 +95,7 @@ export default function OrderHistoryScreen() {
                       navigate('/order/' + order._id);
                     }}
                   >
-                    Details
+                    Xem chi tiết
                   </Button>
                 </td>
               </tr>

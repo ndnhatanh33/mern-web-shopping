@@ -45,9 +45,9 @@ export default function SigninScreen() {
   return (
     <Container className="small-container">
       <Helmet>
-        <title>Sign In</title>
+        <title>Đăng nhập</title>
       </Helmet>
-      <h1 className="my-3">Sign In</h1>
+      <h1 className="my-3">Đăng nhập</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email</Form.Label>
@@ -58,7 +58,7 @@ export default function SigninScreen() {
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="password">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>Mật khẩu</Form.Label>
           <Form.Control
             type="password"
             required
@@ -66,11 +66,13 @@ export default function SigninScreen() {
           />
         </Form.Group>
         <div className="mb-3">
-          <Button type="submit">Sign In</Button>
+          <Button type="submit">Đăng nhập</Button>
         </div>
         <div className="mb-3">
-          New customer?{' '}
-          <Link to={'/signup?redirect=' + redirect}>Create your account</Link>
+          Bạn là Khách hàng mới?{' '}
+          <Link to={'/signup?redirect=' + redirect}>
+            Tạo tài khoản tại đây!
+          </Link>
         </div>
       </Form>
     </Container>

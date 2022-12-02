@@ -71,13 +71,13 @@ export default function UserListScreen() {
   }, [userInfo, successDelete]);
 
   const deleteHandler = async (user) => {
-    if (window.confirm('Are you sure to delete?')) {
+    if (window.confirm('Bạn có chắc chắn muốn xóa Người dùng này?')) {
       try {
         dispatch({ type: 'DELETE_REQUEST' });
         await axios.delete(`/api/users/${user._id}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
-        toast.success('user deleted successfully');
+        toast.success('Xóa Người dùng thành công');
         dispatch({ type: 'DELETE_SUCCESS' });
       } catch (error) {
         toast.error(getError(error));
@@ -91,9 +91,9 @@ export default function UserListScreen() {
   return (
     <div>
       <Helmet>
-        <title>Users</title>
+        <title>Quản lý Người dùng</title>
       </Helmet>
-      <h1>Users</h1>
+      <h1>Danh sách Người dùng</h1>
       {loadingDelete && <LoadingBox></LoadingBox>}
       {loading ? (
         <LoadingBox></LoadingBox>
@@ -104,11 +104,11 @@ export default function UserListScreen() {
           <thead>
             <tr>
               <th>ID</th>
-              <th>NAME</th>
+              <th>Họ tên</th>
               <th>EMAIL</th>
-              <th>IS ADMIN</th>
-              <th>IS STAFF</th>
-              <th>ACTIONS</th>
+              <th>Là Quản trị viên</th>
+              <th>Là Nhân viên</th>
+              <th>Chức năng</th>
             </tr>
           </thead>
           <tbody>
@@ -117,15 +117,15 @@ export default function UserListScreen() {
                 <td>{user._id}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
-                <td>{user.isAdmin ? 'YES' : 'NO'}</td>
-                <td>{user.isStaff ? 'YES' : 'NO'}</td>
+                <td>{user.isAdmin ? 'Phải' : 'Không'}</td>
+                <td>{user.isStaff ? 'Phải' : 'Không'}</td>
                 <td>
                   <Button
                     type="button"
                     variant="light"
                     onClick={() => navigate(`/admin/user/${user._id}`)}
                   >
-                    Edit
+                    Chỉnh sửa
                   </Button>
                   &nbsp;
                   <Button
@@ -133,7 +133,7 @@ export default function UserListScreen() {
                     variant="light"
                     onClick={() => deleteHandler(user)}
                   >
-                    Delete
+                    Xóa
                   </Button>
                 </td>
               </tr>

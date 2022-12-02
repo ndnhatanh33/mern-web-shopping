@@ -52,12 +52,12 @@ export default function SignupScreen() {
   return (
     <Container className="small-container">
       <Helmet>
-        <title>Sign Up</title>
+        <title>Đăng ký</title>
       </Helmet>
-      <h1 className="my-3">Sign Up</h1>
+      <h1 className="my-3">Đăng ký</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="name">
-          <Form.Label>Name</Form.Label>
+          <Form.Label>Họ tên</Form.Label>
           <Form.Control required onChange={(e) => setName(e.target.value)} />
         </Form.Group>
         <Form.Group className="mb-3" controlId="email">
@@ -69,7 +69,7 @@ export default function SignupScreen() {
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="password">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>Mật khẩu</Form.Label>
           <Form.Control
             type="password"
             required
@@ -77,7 +77,7 @@ export default function SignupScreen() {
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="confirmPassword">
-          <Form.Label>Confirm Password</Form.Label>
+          <Form.Label>Xác nhận mật khẩu</Form.Label>
           <Form.Control
             type="password"
             required
@@ -85,11 +85,11 @@ export default function SignupScreen() {
           />
         </Form.Group>
         <div className="mb-3">
-          <Button type="submit">Sign Up</Button>
+          <Button type="submit">Đăng ký</Button>
         </div>
         <div className="mb-3">
-          Already have an account?{' '}
-          <Link to={'/signin?redirect=' + redirect}>Sign-In</Link>
+          Bạn đã có tài khoản?{' '}
+          <Link to={'/signin?redirect=' + redirect}>Đăng nhập tại đây!</Link>
         </div>
       </Form>
     </Container>

@@ -95,7 +95,7 @@ export default function ProductListScreen() {
   }, [page, userInfo, successDelete]);
 
   const createHandler = async () => {
-    if (window.confirm('Are you sure to create?')) {
+    if (window.confirm('Bạn có muốn tạo sản phẩm?')) {
       try {
         dispatch({ type: 'CREATE_REQUEST' });
         const { data } = await axios.post(
@@ -105,7 +105,7 @@ export default function ProductListScreen() {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           }
         );
-        toast.success('product created successfully');
+        toast.success('Sản phẩm được tạo thành công');
         dispatch({ type: 'CREATE_SUCCESS' });
         navigate(`/staff/product/${data.product._id}`);
       } catch (err) {
@@ -118,12 +118,12 @@ export default function ProductListScreen() {
   };
 
   const deleteHandler = async (product) => {
-    if (window.confirm('Are you sure to delete?')) {
+    if (window.confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
       try {
         await axios.delete(`/api/products/${product._id}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
-        toast.success('product deleted successfully');
+        toast.success('Sản phẩm được xóa thành công');
         dispatch({ type: 'DELETE_SUCCESS' });
       } catch (err) {
         toast.error(getError(error));
@@ -137,16 +137,16 @@ export default function ProductListScreen() {
   return (
     <div>
       <Helmet>
-        <title>Products</title>
+        <title>Quản lý Sản phẩm</title>
       </Helmet>
       <Row>
         <Col>
-          <h1>Products</h1>
+          <h1>Danh sách sản phẩm</h1>
         </Col>
         <Col className="col text-end">
           <div>
             <Button type="button" onClick={createHandler}>
-              Create Product
+              Tạo sản phẩm mới
             </Button>
           </div>
         </Col>
@@ -165,11 +165,11 @@ export default function ProductListScreen() {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>NAME</th>
-                <th>PRICE</th>
-                <th>CATEGORY</th>
-                <th>BRAND</th>
-                <th>ACTIONS</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá tiền</th>
+                <th>Loại sản phẩm</th>
+                <th>Thương hiệu</th>
+                <th>Chức năng</th>
               </tr>
             </thead>
             <tbody>
@@ -186,7 +186,7 @@ export default function ProductListScreen() {
                       variant="light"
                       onClick={() => navigate(`/staff/product/${product._id}`)}
                     >
-                      Edit
+                      Chỉnh sửa
                     </Button>
                     &nbsp;
                     <Button
@@ -194,7 +194,7 @@ export default function ProductListScreen() {
                       variant="light"
                       onClick={() => deleteHandler(product)}
                     >
-                      Delete
+                      Xóa
                     </Button>
                   </td>
                 </tr>

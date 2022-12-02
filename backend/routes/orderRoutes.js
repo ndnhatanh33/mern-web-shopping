@@ -134,6 +134,9 @@ orderRouter.put(
       'email name'
     );
     if (order) {
+      order.totalPrice = order.totalPrice / 23000;
+      order.itemsPrice = order.itemsPrice / 23000;
+      order.taxPrice = order.taxPrice / 23000;
       order.isPaid = true;
       order.paidAt = Date.now();
       order.paymentResult = {
@@ -148,9 +151,9 @@ orderRouter.put(
         .messages()
         .send(
           {
-            from: 'Nhat Anh Company <amazona@mg.yourdomain.com>',
+            from: "NhatAnh' Store <nhatanhstore@example.com>",
             to: `${order.user.name} <${order.user.email}>`,
-            subject: `New order ${order._id}`,
+            subject: `Đơn hàng mới ${order._id}`,
             html: payOrderEmailTemplate(order),
           },
           (error, body) => {
@@ -161,8 +164,11 @@ orderRouter.put(
             }
           }
         );
-
       res.send({ message: 'Order Paid', order: updatedOrder });
+      order.totalPrice = order.totalPrice * 23000;
+      order.itemsPrice = order.itemsPrice * 23000;
+      order.taxPrice = order.taxPrice * 23000;
+      order.save();
     } else {
       res.status(404).send({ message: 'Order Not Found' });
     }

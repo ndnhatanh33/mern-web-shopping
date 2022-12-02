@@ -57,10 +57,7 @@ function App() {
             <Container>
               <LinkContainer to="/">
                 <Navbar.Brand>
-                  <img
-                    src="images\logo-removebg.png"
-                    style={{ width: '80px' }}
-                  />{' '}
+                  <img src="images\logo.png" style={{ width: '80px' }} />{' '}
                   NhatAnh's Store
                 </Navbar.Brand>
               </LinkContainer>

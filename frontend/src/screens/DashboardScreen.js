@@ -8,6 +8,8 @@ import MessageBox from '../components/MessageBox';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
+import { Helmet } from 'react-helmet-async';
+import { formatCash } from '../utils';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -53,7 +55,10 @@ export default function DashboardScreen() {
 
   return (
     <div>
-      <h1>Dashboard</h1>
+      <Helmet>
+        <title>Thống kê</title>
+      </Helmet>
+      <h1>Thống kê</h1>
       {loading ? (
         <LoadingBox />
       ) : error ? (
@@ -69,7 +74,7 @@ export default function DashboardScreen() {
                       ? summary.users[0].numUsers
                       : 0}
                   </Card.Title>
-                  <Card.Text> Users</Card.Text>
+                  <Card.Text> Người dùng</Card.Text>
                 </Card.Body>
               </Card>
             </Col>
@@ -77,11 +82,11 @@ export default function DashboardScreen() {
               <Card>
                 <Card.Body>
                   <Card.Title>
-                    {summary.orders && summary.users[0]
+                    {summary.orders && summary.orders[0]
                       ? summary.orders[0].numOrders
                       : 0}
                   </Card.Title>
-                  <Card.Text> Orders</Card.Text>
+                  <Card.Text> Đơn hàng</Card.Text>
                 </Card.Body>
               </Card>
             </Col>
@@ -89,45 +94,45 @@ export default function DashboardScreen() {
               <Card>
                 <Card.Body>
                   <Card.Title>
-                    $
-                    {summary.orders && summary.users[0]
-                      ? summary.orders[0].totalSales.toFixed(2)
+                    {summary.orders && summary.orders[0]
+                      ? formatCash(summary.orders[0].totalSales)
                       : 0}
+                    đ
                   </Card.Title>
-                  <Card.Text> Orders</Card.Text>
+                  <Card.Text> Tổng tiền bán được</Card.Text>
                 </Card.Body>
               </Card>
             </Col>
           </Row>
           <div className="my-3">
-            <h2>Sales</h2>
+            <h2>Bán hàng</h2>
             {summary.dailyOrders.length === 0 ? (
-              <MessageBox>No Sale</MessageBox>
+              <MessageBox>Chưa bán được đơn hàng nào</MessageBox>
             ) : (
               <Chart
                 width="100%"
                 height="400px"
                 chartType="AreaChart"
-                loader={<div>Loading Chart...</div>}
+                loader={<div>Đang tải biểu đồ...</div>}
                 data={[
-                  ['Date', 'Sales'],
+                  ['Ngày', 'Tiền'],
                   ...summary.dailyOrders.map((x) => [x._id, x.sales]),
                 ]}
               ></Chart>
             )}
           </div>
           <div className="my-3">
-            <h2>Categories</h2>
+            <h2>Phân loại sản phẩm</h2>
             {summary.productCategories.length === 0 ? (
-              <MessageBox>No Category</MessageBox>
+              <MessageBox>Chưa có loại sản phẩm nào</MessageBox>
             ) : (
               <Chart
                 width="100%"
                 height="400px"
                 chartType="PieChart"
-                loader={<div>Loading Chart...</div>}
+                loader={<div>Đang tải biểu đồ...</div>}
                 data={[
-                  ['Category', 'Products'],
+                  ['Loại sản phẩm', 'Sản phẩm'],
                   ...summary.productCategories.map((x) => [x._id, x.count]),
                 ]}
               ></Chart>

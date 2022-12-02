@@ -9,6 +9,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
+import { formatCash } from '../utils';
 
 export default function CartScreen() {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export default function CartScreen() {
   const updateCartHandler = async (item, quantity) => {
     const { data } = await axios.get('/api/products/' + item._id);
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock');
+      window.alert('Xin thứ lỗi! Sản phẩm đã hết hàng.');
       return;
     }
     ctxDispatch({
@@ -40,14 +41,14 @@ export default function CartScreen() {
   return (
     <div>
       <Helmet>
-        <title>Shopping Cart</title>
+        <title>Giỏ hàng</title>
       </Helmet>
-      <h1>Shopping Cart</h1>
+      <h1>Giỏ hàng</h1>
       <Row>
         <Col md={8}>
           {cartItems.length === 0 ? (
             <MessageBox>
-              Cart is empty. <Link to="/">Go Shopping</Link>
+              Giỏ hàng đang trống. <Link to="/">Bắt đầu mua sắm ngay thôi</Link>
             </MessageBox>
           ) : (
             <ListGroup>
@@ -83,7 +84,7 @@ export default function CartScreen() {
                         <i className="fas fa-plus-circle"></i>
                       </Button>
                     </Col>
-                    <Col md={3}>${item.price}</Col>
+                    <Col md={3}>{formatCash(item.price)}đ</Col>
                     <Col md={2}>
                       <Button
                         onClick={() => removeItemHandler(item)}
@@ -104,9 +105,12 @@ export default function CartScreen() {
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   <h3>
-                    Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
-                    items) : $
-                    {cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}
+                    Tổng tiền ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
+                    sản phẩm) :{' '}
+                    {formatCash(
+                      cartItems.reduce((a, c) => a + c.price * c.quantity, 0)
+                    )}
+                    đ
                   </h3>
                 </ListGroup.Item>
                 <ListGroup.Item>
@@ -117,7 +121,7 @@ export default function CartScreen() {
                       onClick={checkoutHandler}
                       disabled={cartItems.length === 0}
                     >
-                      Proceed to Checkout
+                      Tiến hành Thanh toán
                     </Button>
                   </div>
                 </ListGroup.Item>

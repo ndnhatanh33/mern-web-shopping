@@ -36,37 +36,37 @@ const reducer = (state, action) => {
 
 const prices = [
   {
-    name: '$1 to $50',
-    value: '1-50',
+    name: '1.000.000đ đến 5.000.000đ',
+    value: '1000000-5000000',
   },
   {
-    name: '$51 to $200',
-    value: '51-200',
+    name: '5.000.000đ đến 10.000.000đ',
+    value: '5000001-10000000',
   },
   {
-    name: '$201 to $1000',
-    value: '201-1000',
+    name: '10.000.000đ trở lên',
+    value: '10000001-100000000',
   },
 ];
 
 export const ratings = [
   {
-    name: '4stars & up',
+    name: '4 sao trở lên',
     rating: 4,
   },
 
   {
-    name: '3stars & up',
+    name: '3 sao trở lên',
     rating: 3,
   },
 
   {
-    name: '2stars & up',
+    name: '2 sao trở lên',
     rating: 2,
   },
 
   {
-    name: '1stars & up',
+    name: '1 sao trở lên',
     rating: 1,
   },
 ];
@@ -74,7 +74,7 @@ export const ratings = [
 export default function SearchScreen() {
   const navigate = useNavigate();
   const { search } = useLocation();
-  const sp = new URLSearchParams(search); // /search?category=Shirts
+  const sp = new URLSearchParams(search);
   const category = sp.get('category') || 'all';
   const query = sp.get('query') || 'all';
   const price = sp.get('price') || 'all';
@@ -130,11 +130,11 @@ export default function SearchScreen() {
   return (
     <div>
       <Helmet>
-        <title>Search Products</title>
+        <title>Tìm kiếm Sản phẩm</title>
       </Helmet>
       <Row>
         <Col md={3}>
-          <h3>Department</h3>
+          <h3>Theo Loại sản phẩm</h3>
           <div>
             <ul>
               <li>
@@ -142,7 +142,7 @@ export default function SearchScreen() {
                   className={'all' === category ? 'text-bold' : ''}
                   to={getFilterUrl({ category: 'all' })}
                 >
-                  Any
+                  Tất cả sản phẩm
                 </Link>
               </li>
               {categories.map((c) => (
@@ -158,14 +158,14 @@ export default function SearchScreen() {
             </ul>
           </div>
           <div>
-            <h3>Price</h3>
+            <h3>Theo Giá tiền</h3>
             <ul>
               <li>
                 <Link
                   className={'all' === price ? 'text-bold' : ''}
                   to={getFilterUrl({ price: 'all' })}
                 >
-                  Any
+                  Tất cả sản phẩm
                 </Link>
               </li>
               {prices.map((p) => (
@@ -181,7 +181,7 @@ export default function SearchScreen() {
             </ul>
           </div>
           <div>
-            <h3>Avg. Customer Review</h3>
+            <h3>Theo Đánh giá</h3>
             <ul>
               {ratings.map((r) => (
                 <li key={r.name}>
@@ -189,7 +189,7 @@ export default function SearchScreen() {
                     to={getFilterUrl({ rating: r.rating })}
                     className={`${r.rating}` === `${rating}` ? 'text-bold' : ''}
                   >
-                    <Rating caption={' & up'} rating={r.rating}></Rating>
+                    <Rating caption={' trở lên'} rating={r.rating}></Rating>
                   </Link>
                 </li>
               ))}
@@ -214,11 +214,11 @@ export default function SearchScreen() {
               <Row className="justify-content-between mb-3">
                 <Col md={6}>
                   <div>
-                    {countProducts === 0 ? 'No' : countProducts} Results
+                    {countProducts === 0 ? 'Không có' : countProducts} Kết quả
                     {query !== 'all' && ' : ' + query}
                     {category !== 'all' && ' : ' + category}
-                    {price !== 'all' && ' : Price ' + price}
-                    {rating !== 'all' && ' : Rating ' + rating + ' & up'}
+                    {price !== 'all' && ' : Giá tiền ' + price}
+                    {rating !== 'all' && ' : Đánh giá ' + rating + ' trở lên'}
                     {query !== 'all' ||
                     category !== 'all' ||
                     rating !== 'all' ||
@@ -233,22 +233,22 @@ export default function SearchScreen() {
                   </div>
                 </Col>
                 <Col className="text-end">
-                  Sort by{' '}
+                  Sắp xếp theo{' '}
                   <select
                     value={order}
                     onChange={(e) => {
                       navigate(getFilterUrl({ order: e.target.value }));
                     }}
                   >
-                    <option value="newest">Newest Arrivals</option>
-                    <option value="lowest">Price: Low to High</option>
-                    <option value="highest">Price: High to Low</option>
-                    <option value="toprated">Avg. Customer Reviews</option>
+                    <option value="newest">Sản phẩm mới nhất</option>
+                    <option value="lowest">Giá tiền: Thấp đến Cao</option>
+                    <option value="highest">Giá tiền: Cao xuống Thấp</option>
+                    <option value="toprated">Đánh giá Khách hàng</option>
                   </select>
                 </Col>
               </Row>
               {products.length === 0 && (
-                <MessageBox>No Product Found</MessageBox>
+                <MessageBox>Không tìm thấy sản phẩm</MessageBox>
               )}
 
               <Row>

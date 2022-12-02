@@ -8,6 +8,8 @@ body {
 }
 
 .site-container {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
 }
 
@@ -17,8 +19,14 @@ main {
 
 .btn-primary,
 .btn-outline-primary {
-  background-color: #f0c040;
-  color: #000000;
+  background-color: #ff5555;
+  color: #ffffff;
+  border: 0px;
+}
+
+.btn-primary:hover,
+.btn-outline-primary:hover {
+  background-color: #ffa33a;
 }
 
 .products {
@@ -96,4 +104,36 @@ main {
 
 button.thumbnail {
   padding: 0;
+}
+
+.btn-home {
+  padding: 0;
+  margin: 10px 10px 10px 0;
+}
+
+.header-info #basic-nav-dropdown {
+  color: white;
+}
+
+.header-info #admin-nav-dropdown {
+  color: white;
+}
+
+.header-info #staff-nav-dropdown {
+  color: white;
+}
+
+.navbar-collapse {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 992px) {
+  .navbar-expand-lg {
+    padding: 0;
+  }
+}
+
+.carousel-item img:hover {
+  cursor: pointer;
 }

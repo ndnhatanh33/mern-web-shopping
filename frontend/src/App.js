@@ -48,50 +48,28 @@ function App() {
     window.location.href = '/signin';
   };
 
-  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const { data } = await axios.get('/api/products/categories');
-        setCategories(data);
-      } catch (err) {
-        toast.error(getError(err));
-      }
-    };
-    fetchCategories();
-  }, []);
-
   return (
     <BrowserRouter>
-      <div
-        className={
-          sidebarIsOpen
-            ? 'd-flex flex-column site-container active-cont'
-            : 'd-flex flex-column site-container'
-        }
-      >
-        <ToastContainer position="bottom-center" limit={1} />
+      <ToastContainer position="bottom-center" limit={1} />
+      <div className="site-container">
         <header>
-          <Navbar bg="dark" variant="dark" expand="lg">
+          <Navbar bg="primary gradient" variant="dark" expand="lg">
             <Container>
-              <Button
-                variant="dark"
-                onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
-              >
-                <i className="fas fa-bars"></i>
-              </Button>
-
               <LinkContainer to="/">
-                <Navbar.Brand>NhatAnh's Store</Navbar.Brand>
+                <Navbar.Brand>
+                  <img
+                    src="images\logo-removebg.png"
+                    style={{ width: '80px' }}
+                  />{' '}
+                  NhatAnh's Store
+                </Navbar.Brand>
               </LinkContainer>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <SearchBox />
                 <Nav className="me-auto  w-100  justify-content-end">
-                  <Link to="/cart" className="nav-link">
-                    Cart
+                  <Link to="/cart" className="nav-link text-white">
+                    <i className="fas fa-shopping-cart"></i>
                     {cart.cartItems.length > 0 && (
                       <Badge pill bg="danger">
                         {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
@@ -99,12 +77,18 @@ function App() {
                     )}
                   </Link>
                   {userInfo ? (
-                    <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
+                    <NavDropdown
+                      title={userInfo.name}
+                      id="basic-nav-dropdown"
+                      className="header-info"
+                    >
                       <LinkContainer to="/profile">
-                        <NavDropdown.Item>User Profile</NavDropdown.Item>
+                        <NavDropdown.Item>
+                          Thông tin Người dùng
+                        </NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/orderhistory">
-                        <NavDropdown.Item>Order History</NavDropdown.Item>
+                        <NavDropdown.Item>Lịch sử Đơn hàng</NavDropdown.Item>
                       </LinkContainer>
                       <NavDropdown.Divider />
                       <Link
@@ -112,31 +96,39 @@ function App() {
                         to="#signout"
                         onClick={signoutHandler}
                       >
-                        Sign Out
+                        Đăng xuất
                       </Link>
                     </NavDropdown>
                   ) : (
                     <Link className="nav-link" to="/signin">
-                      Sign In
+                      Đăng nhập
                     </Link>
                   )}
                   {userInfo && userInfo.isAdmin && (
-                    <NavDropdown title="Admin" id="admin-nav-dropdown">
+                    <NavDropdown
+                      title="Quản trị viên"
+                      id="admin-nav-dropdown"
+                      className="header-info"
+                    >
                       <LinkContainer to="/admin/dashboard">
-                        <NavDropdown.Item>Dashboard</NavDropdown.Item>
+                        <NavDropdown.Item>Thống kê</NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/users">
-                        <NavDropdown.Item>Users</NavDropdown.Item>
+                        <NavDropdown.Item>Quản lý Người dùng</NavDropdown.Item>
                       </LinkContainer>
                     </NavDropdown>
                   )}
                   {userInfo && userInfo.isStaff && (
-                    <NavDropdown title="Staff" id="staff-nav-dropdown">
+                    <NavDropdown
+                      title="Nhân viên"
+                      id="staff-nav-dropdown"
+                      className="header-info"
+                    >
                       <LinkContainer to="/staff/products">
-                        <NavDropdown.Item>Products</NavDropdown.Item>
+                        <NavDropdown.Item>Quản lý Sản phẩm</NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/staff/orders">
-                        <NavDropdown.Item>Orders</NavDropdown.Item>
+                        <NavDropdown.Item>Quản lý Đơn hàng</NavDropdown.Item>
                       </LinkContainer>
                     </NavDropdown>
                   )}
@@ -145,29 +137,6 @@ function App() {
             </Container>
           </Navbar>
         </header>
-        <div
-          className={
-            sidebarIsOpen
-              ? 'active-nav side-navbar d-flex justify-content-between flex-wrap flex-column'
-              : 'side-navbar d-flex justify-content-between flex-wrap flex-column'
-          }
-        >
-          <Nav className="flex-column text-white w-100 p-2">
-            <Nav.Item>
-              <strong>Categories</strong>
-            </Nav.Item>
-            {categories.map((category) => (
-              <Nav.Item key={category}>
-                <LinkContainer
-                  to={'/search?category=' + category}
-                  onClick={() => setSidebarIsOpen(false)}
-                >
-                  <Nav.Link>{category}</Nav.Link>
-                </LinkContainer>
-              </Nav.Item>
-            ))}
-          </Nav>
-        </div>
         <main>
           <Container className="mt-3">
             <Routes>
@@ -258,7 +227,19 @@ function App() {
           </Container>
         </main>
         <footer>
-          <div className="text-center">All rights reserved</div>
+          <div className="text-center text-white bg-primary bg-gradient">
+            <h1 style={{ fontSize: '20px', color: '#c70000' }}>
+              Niên luận ngành Kỹ thuật phần mềm 2022
+            </h1>
+            <p style={{ marginBottom: '5px' }}>
+              Nguyễn Đạt Nhật Anh - B1906622
+            </p>
+            <p style={{ marginBottom: '5px' }}>
+              Kỹ thuật phần mềm K45 - Đại học Cần Thơ
+            </p>
+            <p style={{ marginBottom: '5px' }}>Email: ndnhatanh33@gmail.com</p>
+            <p style={{ marginBottom: '0' }}>Số điện thoại: 0979300469</p>
+          </div>
         </footer>
       </div>
     </BrowserRouter>

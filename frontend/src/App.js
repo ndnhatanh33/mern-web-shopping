@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
@@ -9,7 +9,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Badge from 'react-bootstrap/Badge';
 import Container from 'react-bootstrap/Container';
 import { LinkContainer } from 'react-router-bootstrap';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { Store } from './Store';
 import { Link } from 'react-router-dom';
 import CartScreen from './screens/CartScreen';
@@ -54,7 +54,11 @@ function App() {
             <Container>
               <LinkContainer to="/">
                 <Navbar.Brand>
-                  <img src="images\logo.png" style={{ width: '80px' }} />{' '}
+                  <img
+                    src="https://res.cloudinary.com/dk845ibfo/image/upload/v1669978962/logo_ms7bv7.png"
+                    style={{ width: '80px' }}
+                    alt="logo"
+                  />{' '}
                   NhatAnh's Store
                 </Navbar.Brand>
               </LinkContainer>

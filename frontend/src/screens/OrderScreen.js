@@ -330,6 +330,7 @@ export default function OrderScreen() {
                   </ListGroup.Item>
                 )}
                 {!order.isPaid &&
+                  userInfo.isStaff &&
                   order.paymentMethod === 'Thanh toán khi nhận hàng' && (
                     <ListGroup.Item>
                       {isPending ? (
